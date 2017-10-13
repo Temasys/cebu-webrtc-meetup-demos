@@ -1,0 +1,26 @@
+<style>
+video {
+
+  width: 320px;
+  height: 240px;
+  margin: 20px;
+}
+
+video.screenshare {
+  width: 690px;
+  height: auto;
+}
+
+video#local {
+  width:100px;
+  margin: auto;
+  display: block;
+  transform: rotateY(180deg);
+}
+#remote {
+  background-color: #ccc;
+  width: 724px;
+  margin: auto;
+  margin-top: 20%;
+}
+</style>

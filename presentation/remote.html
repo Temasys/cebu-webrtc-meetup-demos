@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.temasys.com.sg/skylink/skylinkjs/latest/skylink.complete.js"></script>
+
+
+
+  <style>
+
+    * {
+      font-face: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    }
+
+    html,body {
+      width: 100%;
+      height: 100%;
+      padding: 5px;
+      margin: 0;
+      border: 0;
+      cursor: pointer;
+    }
+    button {
+      height: 200px;
+      width: 180px;
+      text-align: center;
+      margin: auto auto;
+
+      border: 5px solid #00AAA4;
+      background-color: rgba(0, 166, 155, 0.11);
+      font-size: 1.3em;
+      font-weight: 300;
+      display: inline-block;
+    }
+
+    button:focus {
+      outline: none;
+      background-color: yellow;
+    }
+
+    video {
+      width: 300px;
+    }
+
+
+  </style>
+
+</head>
+<body>
+
+
+<script>
+
+  var skylink = new Skylink();
+
+  skylink.init({
+    apiKey: 'your-key-here',
+    defaultRoom: 'millimatters'
+  }, function() {
+    skylink.joinRoom({
+      audio: false,
+      video: false
+    })
+  });
+
+  skylink.on('peerJoined', function(peerId, peerInfo, isSelf) {
+    if(isSelf) return;
+  });
+
+  function prev() {
+    skylink.sendMessage('prev');
+  }
+
+  function next() {
+    skylink.sendMessage('next');
+  }
+
+
+  /////
+
+
+  skylink.on('incomingStream', function(peerId, stream, isSelf) {
+    if(isSelf) return;
+    attachMediaStream(document.getElementById('remote'), stream);
+  });
+
+
+  skylink.on('mediaAccessSuccess', function(stream) {
+    attachMediaStream(document.getElementById('local'), stream);
+  });
+
+
+
+  function start() {
+    skylink.joinRoom({
+      audio: true,
+      video: true
+    })
+
+    $('#video-container').show();
+  }
+
+  function stop() {
+    skylink.leaveRoom();
+    $('#video-container').hide();
+  }
+
+
+
+
+</script>
+
+
+
+
+<div>
+<button onclick="prev();">Previous Section</button>
+<button onclick="next();">Next Section</button>
+</div>
+
+<div id="video-container">
+  <video id="local" muted autoplay></video>
+  <video id="remote" muted autoplay></video>
+</div>
+
+<div>
+<button onclick="start();">Join Video</button>
+<button onclick="stop();">Leave Video</button>
+</div>
+
+
+</body>
+</html>

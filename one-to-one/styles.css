@@ -1,0 +1,13 @@
+video {
+  width: 320px;
+  height: 240px;
+  margin: 20px;
+}
+
+#local {
+  transform: rotateY(180deg);
+}
+
+#remote {
+  background-color: #ccc;
+}
